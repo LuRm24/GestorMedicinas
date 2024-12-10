@@ -6,5 +6,5 @@ sealed class Screen(val route: String){
     //  Definimos la pantalla Login en la ruta login
     object Medicinas: Screen("medicinas")
 
-    object Productos: Screen("productos")
+    object AddMedicine: Screen("addmedicine")
 }

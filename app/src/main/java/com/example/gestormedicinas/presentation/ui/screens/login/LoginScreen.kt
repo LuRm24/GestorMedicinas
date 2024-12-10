@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,17 +27,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.gestormedicinas.R
 import com.example.gestormedicinas.presentation.navigation.Screen
-import com.example.gestormedicinas.presentation.ui.screens.products.AddProductScreen
+import com.example.gestormedicinas.presentation.viewmodel.UsernamePasswordViewModel
 
 
 @Composable
-fun LoginScreen(navController: NavController) {
-    var username by remember { mutableStateOf("") } // Valor inicial requerido
-    var password by remember { mutableStateOf("") } // Agregando un campo para la contraseña
+fun LoginScreen(
+    navController: NavController,
+    usernamePasswordViewModel: UsernamePasswordViewModel
+) {
+    val username by usernamePasswordViewModel.username.collectAsState() // Valor inicial requerido
+    val password by usernamePasswordViewModel.password.collectAsState() // Valor inicial requerido // Agregando un campo para la contraseña
 
     Surface(
         modifier = Modifier
@@ -56,7 +61,8 @@ fun LoginScreen(navController: NavController) {
                     .clip(RoundedCornerShape(16.dp))
                     .width(110.dp)
                     .height(110.dp),
-                contentDescription = "Logo")
+                contentDescription = "Logo"
+            )
             Spacer(modifier = Modifier.height(70.dp)) // Separador
             // Campo para el nombre de usuario
             TextField(
@@ -64,7 +70,7 @@ fun LoginScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 value = username,
-                onValueChange = { username = it },
+                onValueChange = { usernamePasswordViewModel.setUsername(it)  },
                 placeholder = { Text(text = "Username") }
             )
             Spacer(modifier = Modifier.height(20.dp)) // Separador
@@ -75,26 +81,44 @@ fun LoginScreen(navController: NavController) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = { usernamePasswordViewModel.setPassword(it) },
                 placeholder = { Text(text = "Password") },
                 visualTransformation = PasswordVisualTransformation()
             )
             Spacer(modifier = Modifier.height(16.dp)) // Separador
 
             // Botón de login
-            Button(
-                onClick = { navController.navigate(Screen.Medicinas.route) },
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp), // Espacio entre botones
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
             ) {
-                Text(text = "Login") // Texto dentro del botón
+                // Botón de login
+                Button(
+                    onClick = { navController.navigate(Screen.Medicinas.route) },
+                    modifier = Modifier
+                        .weight(1f) // Hacer que los botones tengan el mismo ancho
+                ) {
+                    Text(text = "Login")
+                }
+
+                // Botón de registro
+                Button(
+                    onClick = { navController.navigate(Screen.Medicinas.route) },
+                    modifier = Modifier
+                        .weight(1f) // Hacer que los botones tengan el mismo ancho
+                ) {
+                    Text(text = "Registrarse")
+                }
             }
+
         }
     }
 }
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewLoginScreen() {
-    LoginScreen(navController = rememberNavController())
+    LoginScreen(navController = rememberNavController(), viewModel())
 }

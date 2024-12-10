@@ -18,13 +18,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.gestormedicinas.presentation.navigation.Screen
 
 @Composable
 fun AddMedicinaActivity(navController: NavController) {
-    var text by remember { mutableStateOf("") }
+
+    var idMedicamento by remember { mutableStateOf("") }
+    var nombreMedicamento by remember { mutableStateOf("") }
+    var tipoMedicamento by remember { mutableStateOf("") }
+    var distribuidora by remember { mutableStateOf("") }
+    var composicion by remember { mutableStateOf("") }
+
     Surface(
         modifier = Modifier
             //q llene toda la pantalla
@@ -33,60 +41,72 @@ fun AddMedicinaActivity(navController: NavController) {
         //  a las barras de estado
     ) {
         Column(
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .fillMaxSize()
+                .padding(16.dp)// Añadir margen alrededor del contenido
 
         ) {
             TextField(
-                modifier = Modifier,//modifier cambia cosas
-                value = text,
-                onValueChange = { text = it },//it es el texto q introduce
-                // la persona q acaba de escribir
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp), // Aumentar altura
+                value = idMedicamento,
+                onValueChange = { idMedicamento = it },//it es el texto q introduce
                 label = { Text("ID medicamento") }
             )
             Spacer(modifier = Modifier.height(10.dp))
 
             //TextField para ingresar texto
             TextField(
-                modifier = Modifier,//modifier cambia cosas
-                value = text,
-                onValueChange = { text = it },//it es el texto q introduce
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp), // Aumentar altura
+                value = nombreMedicamento,
+                onValueChange = { nombreMedicamento= it },//it es el texto q introduce
                 // la persona q acaba de escribir
                 label = { Text("Nombre de medicamento") }
             )
             Spacer(modifier = Modifier.height(10.dp))
 
             TextField(
-                modifier = Modifier,//modifier cambia cosas
-                value = text,
-                onValueChange = { text = it },//it es el texto q introduce
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp), // Aumentar altura
+                value = tipoMedicamento,
+                onValueChange = { tipoMedicamento = it },//it es el texto q introduce
                 // la persona q acaba de escribir
                 label = { Text("Tipo de medicamento") }
             )
             Spacer(modifier = Modifier.height(10.dp))
 
             TextField(
-                modifier = Modifier,//modifier cambia cosas
-                value = text,
-                onValueChange = { text = it },//it es el texto q introduce
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(70.dp), // Aumentar altura
+                value = distribuidora,
+                onValueChange = { distribuidora = it },//it es el texto q introduce
                 // la persona q acaba de escribir
                 label = { Text("Distribuidora") }
             )
             Spacer(modifier = Modifier.height(10.dp))
             TextField(
-                modifier = Modifier,//modifier cambia cosas
-                value = text,
-                onValueChange = { text = it },//it es el texto q introduce
-                // la persona q acaba de escribir
-                label = {
-                    Text("Composicón") }
-            )
-            Button(
-                onClick = { navController.navigate(Screen.Productos.route) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
+                    .height(70.dp), // Aumentar altura
+                value = composicion,
+                onValueChange = { composicion= it },//it es el texto q introduce
+                // la persona q acaba de escribir
+                label = {
+                    Text("Composicón")
+                }
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Button(
+                onClick = { navController.navigate(Screen.Medicinas.route) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 120.dp)
             ) {
                 Text(text = "Añadir") // Texto dentro del botón
             }
@@ -94,4 +114,9 @@ fun AddMedicinaActivity(navController: NavController) {
         }
 
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun AddMedicinaActivityPreview() {
+    AddMedicinaActivity(navController = rememberNavController())
 }
