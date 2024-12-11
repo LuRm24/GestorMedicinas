@@ -25,8 +25,9 @@ class UsernamePasswordViewModel :ViewModel(){
         _username.value = ""
         _password.value = ""
     }
-    fun isValidCredentials(): Boolean{
-        return _username.value == VALID_USERNAME && _password.value == VALID_PASSWORD
+    fun isValidLogin(): Boolean {
+        return username.value == VALID_USERNAME &&
+                password.value == VALID_PASSWORD
     }
 
 }

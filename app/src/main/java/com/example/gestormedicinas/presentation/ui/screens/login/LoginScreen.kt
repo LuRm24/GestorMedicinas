@@ -96,7 +96,13 @@ fun LoginScreen(
             ) {
                 // Botón de login
                 Button(
-                    onClick = { navController.navigate(Screen.Medicinas.route) },
+                    onClick = {
+                        if(usernamePasswordViewModel.isValidLogin()) {
+                            navController.navigate(Screen.Medicinas.route)
+                        } else {
+
+                        }
+                              },
                     modifier = Modifier
                         .weight(1f) // Hacer que los botones tengan el mismo ancho
                 ) {
@@ -105,11 +111,11 @@ fun LoginScreen(
 
                 // Botón de registro
                 Button(
-                    onClick = { navController.navigate(Screen.Medicinas.route) },
+                    onClick = { usernamePasswordViewModel.clear() },
                     modifier = Modifier
                         .weight(1f) // Hacer que los botones tengan el mismo ancho
                 ) {
-                    Text(text = "Registrarse")
+                    Text(text = "Limpiar")
                 }
             }
 
